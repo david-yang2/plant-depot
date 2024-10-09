@@ -15,7 +15,7 @@ const AuthForm = (props) => {
 
   console.log(values);
   return (
-    <form className="border border-slate-300 shadow:xl rounded-md px-4 py-2"
+    <form className="border border-slate-300 shadow:xl rounded-md px-4 py-2 bg-slate-50"
     onSubmit={(e) => {
       e.preventDefault();
     }}>
