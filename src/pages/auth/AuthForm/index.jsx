@@ -21,9 +21,10 @@ const AuthForm = (props) => {
     }}>
       {fields.map((field) => (
         <Field
-          field={field}
+          label={field.label}
+          type={field.type}
           key={field.label}
-          values={values}
+          values={values[field.label]}
           onChange={(e) => {
             setValues({ ...values, [field.label]: e.target.value });
           }}
