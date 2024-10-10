@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const SignInPage = () => {
   return (
-    <div className="flex justify-center bg-emerald-50">
+    <div className="flex bg-emerald-50">
       <FormContainer>
         <AuthForm
           fields={[
