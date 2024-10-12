@@ -2,8 +2,7 @@ import { useState } from "react";
 import Field from "./Field";
 
 const AuthForm = (props) => {
-  const { fields, buttonLabel } = props;
-  console.log(fields);
+  const { fields, buttonLabel, onSubmit } = props;
 
   const [values, setValues] = useState(() => {
     const initialState = {};
@@ -13,11 +12,11 @@ const AuthForm = (props) => {
     return initialState;
   });
 
-  console.log(values);
   return (
     <form className="border border-slate-300 shadow:xl rounded-md px-4 py-2 bg-slate-50"
     onSubmit={(e) => {
       e.preventDefault();
+      onSubmit(values);
     }}>
       {fields.map((field) => (
         <Field
