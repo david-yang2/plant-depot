@@ -12,12 +12,21 @@ const AuthForm = (props) => {
     return initialState;
   });
 
+  const [loading, setLoading] = useState(false);
+
   return (
-    <form className="border border-slate-300 shadow:xl rounded-md px-4 py-2 bg-slate-50"
-    onSubmit={(e) => {
-      e.preventDefault();
-      onSubmit(values);
-    }}>
+    <form
+      className="border border-slate-300 shadow:xl rounded-md px-4 py-2 bg-slate-50"
+      onSubmit={async (e) => {
+        e.preventDefault();
+
+        // display spinner
+        setLoading(true);
+        await onSubmit(values); // onSubmit is an async function
+                                // wait for onSubmit to be done before setting loading to false
+        setLoading(false);
+      }}
+    >
       {fields.map((field) => (
         <Field
           label={field.label}
@@ -29,8 +38,13 @@ const AuthForm = (props) => {
           }}
         />
       ))}
-      <button className="my-2 bg-emerald-700 w-full rounded-full text-lg px-4 py-1 text-white">
+      <button className="my-2 relative bg-emerald-700 w-full rounded-full text-lg px-4 py-1 text-white">
         {buttonLabel}{" "}
+        {loading && (
+          <div className="absolute top-0 right-4 items-center flex h-full">
+            <i className="fa-light fa-spinner-third text-green-300 animate-spin"></i>
+          </div>
+        )}
       </button>
     </form>
   );
