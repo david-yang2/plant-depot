@@ -1,7 +1,7 @@
 import AuthForm from "./AuthForm";
 import FormContainer from "./FormContainer";
 import { Link } from "react-router-dom";
-
+import * as userServices from "../../services/user"
 
 const SignUpPage = () => {
   return (
@@ -20,7 +20,7 @@ const SignUpPage = () => {
             },
           ]}
           buttonLabel="Create"
-          onSubmit={(values) => {
+          onSubmit={async (values) => {
             if (values.username.length < 4) {
               console.log("username is too short")
               return;
@@ -36,7 +36,14 @@ const SignUpPage = () => {
               return;
             }
 
+            // send request
+            // fetch returns a promise so we can await
+            const response = await userServices.createUser({
+              username: values.username,
+              password: values.password
+            })
 
+            console.log(response.status)
           }}
         />
         <Link to="/" className="text-emerald-700 underline mt-3">Sign In</Link>
