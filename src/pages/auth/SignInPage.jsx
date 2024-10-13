@@ -1,14 +1,14 @@
 import AuthForm from "./AuthForm";
 import FormContainer from "./FormContainer";
 import { Link, useLocation } from "react-router-dom";
-import * as userService from "services/user"
+import * as UserService from "services/user"
 import {useState} from "react"
 
 const SignInPage = () => {
   const [error, setError] = useState("")
   const location = useLocation();
+  const [token, SetToken] = useState(() => UserService.getSessionTokenStorage())
 
-  console.log(location.state)
   return (
     <div className="flex bg-emerald-50">
       <FormContainer>
@@ -26,16 +26,16 @@ const SignInPage = () => {
           ]}
           buttonLabel="Sign In"
           onSubmit={async (values) => {
-            const response = await userService.createSession({
+            const response = await UserService.createSession({
               username: values.username,
               password: values.password
             })
 
+            const data = await response.json()
             if (response.status === 201) {
-              console.log("You've logged in successfully")
+              console.log(data)
               setError("")
             } else {
-              const data = await response.json()
               setError(data.error)
             }
           }}
