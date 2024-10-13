@@ -4,6 +4,7 @@ import SignInPage from "./pages/auth/SignInPage";
 import SignUpPage from "./pages/auth/SignUPPage";
 import SessionContext from "contexts/SessionContext"
 import * as UserService from "services/user"
+import {jwtDecode} from "jwt-decode"
 
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
   return (
     <SessionContext.Provider
       value={{
+        username: token ? jwtDecode(token).username : null,
         signIn : (capstoneSessionToken) => {
           SetToken(capstoneSessionToken);
           UserService.setSessionTokenStorage(capstoneSessionToken)
