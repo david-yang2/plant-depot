@@ -2,12 +2,13 @@ import AuthForm from "./AuthForm";
 import FormContainer from "./FormContainer";
 import { Link, useLocation } from "react-router-dom";
 import * as UserService from "services/user"
-import {useState} from "react"
+import {useState, useContext} from "react"
+import SessionContext from "contexts/SessionContext";
 
 const SignInPage = () => {
   const [error, setError] = useState("")
   const location = useLocation();
-  const [token, SetToken] = useState(() => UserService.getSessionTokenStorage())
+  const sessionContext = useContext(SessionContext);
 
   return (
     <div className="flex bg-emerald-50">
@@ -34,6 +35,7 @@ const SignInPage = () => {
             const data = await response.json()
             if (response.status === 201) {
               console.log(data)
+              sessionContext.signIn(data.capstone_session_token)
               setError("")
             } else {
               setError(data.error)
