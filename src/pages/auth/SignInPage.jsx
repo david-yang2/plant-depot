@@ -1,15 +1,21 @@
 import AuthForm from "./AuthForm";
 import FormContainer from "./FormContainer";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import * as userService from "services/user"
 import {useState} from "react"
 
 const SignInPage = () => {
   const [error, setError] = useState("")
+  const location = useLocation();
+
+  console.log(location.state)
   return (
     <div className="flex bg-emerald-50">
       <FormContainer>
       <div className="text-red-600">{error}</div>
+      {location.state?.newAccount && <div
+      className="border border-green-400 my-4 px-4 py-2 rounded-lg bg-green-200 font-playfair">
+        Account created successfully. Please sign in.</div>}
         <AuthForm
           fields={[
             { label: "username", type: "text" },
